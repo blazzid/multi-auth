@@ -12,5 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect(route('login'));
+});
+
+Auth::routes(['register' => false]);
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::group(['middleware' => ['permission:manajemen_user']], function () {
+        Route::resource('/admin/role', 'RoleController')
+        ->except(['show']);
+        Route::resource('/admin/user', 'UserController')
+        ->except(['show']);
+        Route::patch('/admin/ubahsandi/{user}','UserController@ubahsandi');
+    });
 });
