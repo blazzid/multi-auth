@@ -49,9 +49,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link" data-toggle="dropdown">
                         <img src="{{ asset('avatar/avatar5.png') }}" class="user-image img-circle elevation-2" alt="User Image">
-                        <span>{{ Auth::user()->name }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
+                        <span class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i>
+                            <strong>{{ Auth::user()->name }}</strong>
+                        </span>
+                        <div class="dropdown-divider"></div>
                         <a href="/ubahsandi" class="dropdown-item">
                             <i class="fas fa-lock mr-2"></i> Ubah Sandi
                         </a>
