@@ -45,7 +45,7 @@
                         <input type="password" class="form-control" placeholder="Password" name="password">
                         @include('layouts.error', ['name' => 'password'])
                     </div>
-                    <button type="submit" class="btn btn-black">Login</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </form>
             </div>
         </div>

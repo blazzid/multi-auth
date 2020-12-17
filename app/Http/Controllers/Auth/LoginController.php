@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -38,16 +40,32 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    public function credentials(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required|string'
-        ]);
-        
-        if (auth()->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1])) {
-            return redirect()->intended('home');
-        }
-        return redirect()->back()->with(['error' => 'Password Invalid / Inactive Users']);
+        $credentials = $request->only($this->username(), 'password');
+        $credentials = Arr::add($credentials, 'status', 1);
+        return $credentials;
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        Auth::logoutOtherDevices($request->password);
+
+        \LogActivity::addToLog('Login '.$user->email);
+
+        return redirect($this->redirectPath());
+    }
+
+    public function logout(Request $request)
+    {
+        \LogActivity::addToLog('Logout Aplikasi');
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }

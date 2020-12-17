@@ -21,13 +21,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('storage/adminlte/dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <style>
+        .navbar-nav>.user-menu>.dropdown-menu {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            padding: 0;
+            width: 180px;
+        }
+    </style>
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="sidebar-mini layout-navbar-fixed sidebar-collapse">
     <div class="wrapper">
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-primary">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -37,11 +46,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"
-                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                <li class="nav-item dropdown user-menu">
+                    <a href="#" class="nav-link" data-toggle="dropdown">
+                        <img src="{{ asset('avatar/avatar5.png') }}" class="user-image img-circle elevation-2" alt="User Image">
+                        <span>{{ Auth::user()->name }}</span>
                     </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="/ubahsandi" class="dropdown-item">
+                            <i class="fas fa-lock mr-2"></i> Ubah Sandi
+                        </a>
+                        <a href="#" class="dropdown-item"
+                            onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                        </a>
+                    </div>
                 </li>
             </ul>
             <form id="logoutform" action="{{ route('logout') }}" method="POST">
@@ -106,6 +124,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('storage/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('storage/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <!-- Moment -->
+    <script src="{{ asset('storage/adminlte/plugins/moment/moment.min.js') }}"></script>
     @include('sweetalert::alert')
     @stack('scripts')
 </body>

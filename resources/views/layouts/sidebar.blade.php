@@ -1,19 +1,11 @@
 <div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-            <img src="{{ asset('storage/image/avatar/man.jpg') }}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-        </div>
-    </div>
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-flat" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
    with font-awesome or any other icon font library -->
+            <li class="nav-header">MENU UTAMA</li>
+
             <li class="nav-item">
                 <a href="/home" class="nav-link {{ request()->is('home') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -33,15 +25,44 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('role.index') }}" class="nav-link {{ Request::is('admin/role*') ? 'active' : '' }}">
+                        <a href="{{ route('role.index') }}"
+                            class="nav-link {{ Request::is('admin/role*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Role</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('user.index') }}" class="nav-link {{ Request::is('admin/user*') ? 'active' : '' }}">
+                        <a href="{{ route('user.index') }}"
+                            class="nav-link {{ Request::is('admin/user*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>User</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endcan
+            @can('log_monitoring', Model::class)
+            <li class="nav-item has-treeview {{ Request::is('log/*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::is('log/*') ? 'active' : '' }}">
+                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <p>
+                        Log Monitoring
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('logActivity.index') }}"
+                            class="nav-link {{ Request::is('log/logActivity*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Activity</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('logSystem.index') }}"
+                            class="nav-link {{ Request::is('log/logSystem*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>System</p>
                         </a>
                     </li>
                 </ul>

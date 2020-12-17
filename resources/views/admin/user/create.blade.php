@@ -29,21 +29,20 @@
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
-                        <label>User</label>
-                        <input type="text" class="form-control" id="name" name="name"
+                        <label>Nama Operator</label>
+                        <input type="text" class="form-control" name="name"
                             value="{{ old('name') }}">
                         @include('layouts.error', ['name' => 'name'])
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
+                        <input type="email" class="form-control" name="email"
                             value="{{ old('email') }}">
                         @include('layouts.error', ['name' => 'email'])
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <select name="status" class="select2 @error('status') is-invalid @enderror" id="status"
-                            style="width:100%">
+                        <select name="status" class="select2 @error('status') is-invalid @enderror" style="width:100%">
                             <option disabled selected value>Pilih data ...</option>
                             @foreach (json_decode('{"0":"Suspend","1":"Aktif"}', true) as $optionKey => $optionValue)
                             <option value="{{ $optionKey }}"
@@ -56,18 +55,8 @@
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
-                        <label>Sandi</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                            value="{{ old('password') }}">
-                        @include('layouts.error', ['name' => 'password'])
-                    </div>
-                    <div class="form-group">
-                        <label>Ulangi Sandi</label>
-                        <input type="password" class="form-control" id="password-confirm" name="password_confirmation">
-                    </div>
-                    <div class="form-group">
                         <label>Role</label>
-                        <select name="role[]" id="role" class="select2" multiple="multiple" style="width: 100%">
+                        <select name="role[]" class="select2" multiple="multiple" style="width: 100%">
                             @foreach($roles as $id => $roles)
                             <option value="{{ $id }}"
                                 {{ (in_array($id, old('role', [])) || isset($role) && $role->roles->contains($id)) ? 'selected' : '' }}>
@@ -75,6 +64,16 @@
                             @endforeach
                         </select>
                         @include('layouts.error', ['name' => 'role'])
+                    </div>                    
+                    <div class="form-group">
+                        <label>Sandi Baru</label>
+                        <input type="password" class="form-control" name="new_password">
+                        @include('layouts.error', ['name' => 'new_password'])
+                    </div>
+                    <div class="form-group">
+                        <label>Ulangi Sandi Baru</label>
+                        <input type="password" class="form-control" name="new_confirm_password">
+                        @include('layouts.error', ['name' => 'new_confirm_password'])
                     </div>
                 </div>
             </div>

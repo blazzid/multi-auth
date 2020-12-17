@@ -19,3 +19,4 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/role.js', 'public/js');
 mix.js('resources/js/user.js', 'public/js');
+mix.js('resources/js/logActivity.js', 'public/js');

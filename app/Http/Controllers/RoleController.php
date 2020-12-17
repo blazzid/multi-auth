@@ -48,7 +48,9 @@ class RoleController extends Controller
         $permissions = $request->input('permission') ? $request->input('permission') : [];
         $role->givePermissionTo($permissions);
 
-        return redirect()->route('role.index')->with('success', 'Tambah data berhasil !');
+        \LogActivity::addToLog('Tambah role '.$request->name);
+
+        return redirect()->route('role.index')->with('success', 'Tambah da!');
     }
 
     public function edit(Role $role)
@@ -69,11 +71,15 @@ class RoleController extends Controller
         $permissions = $request->input('permission') ? $request->input('permission') : [];
         $role->syncPermissions($permissions);
 
-        return redirect()->route('role.index')->with('success', 'Ubah data berhasil !');
+        \LogActivity::addToLog('Ubah role '.$request->name);
+
+        return redirect()->route('role.index')->with('success', 'Ubah da!');
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
+
+        \LogActivity::addToLog('Hapus role '.$role->name);
     }
 }

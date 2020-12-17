@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use App\Rules\MatchOldPassword;
+use Auth;
 
 class UserController extends Controller
 {
@@ -51,21 +53,24 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
             'status'=>'required',
-            'role'=>'required'
+            'role'=>'required',
+            'new_password' => 'required|string|min:8',
+            'new_confirm_password' => 'same:new_password',
         ]);
 
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'password' => Hash::make($request['new_password']),
         ]);
 
         $roles = $request->input('role') ? $request->input('role') : [];
         $user->assignRole($roles);
 
-        return redirect()->route('user.index')->with('success', 'Tambah data berhasil !');
+        \LogActivity::addToLog('Tambah user '.$request->email);
+
+        return redirect()->route('user.index')->with('success', 'Tambah da!');
     }
 
     public function edit(user $user)
@@ -92,24 +97,46 @@ class UserController extends Controller
         $roles = $request->input('role') ? $request->input('role') : [];
         $user->syncRoles($roles);
 
-        return redirect()->route('user.index')->with('success', 'Ubah data berhasil !');
+        \LogActivity::addToLog('Ubah user '.$request->email);
+
+        return redirect()->route('user.index')->with('success', 'Ubah da!');
     }
 
     public function ubahsandi(Request $request, user $user)
     {
         $request->validate([
-            'password' => 'required|string|min:8|confirmed',
+            'new_password' => ['required','string','min:8'],
+            'new_confirm_password' => ['same:new_password'],
         ]);
 
         $user->update([
-            'password' => Hash::make($request['password']),
+            'password' => Hash::make($request['new_password']),
         ]);
 
-        return redirect()->route('user.index')->with('success', 'Ubah data berhasil !');
+        \LogActivity::addToLog('Ubah sandi '.$user->email);
+
+        return redirect()->route('user.index')->with('success', 'Ubah da!');
+    }
+
+    public function changepassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required','string','min:8'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+   
+        \LogActivity::addToLog('Ubah sandi '.Auth::user()->email);
+
+        return redirect()->route('home')->with('success', 'Ubah da!');
     }
 
     public function destroy(user $user)
     {
         $user->delete();
+
+        \LogActivity::addToLog('Hapus user '.$user->email);
     }
 }

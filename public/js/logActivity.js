@@ -81,98 +81,134 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/user.js":
-/*!******************************!*\
-  !*** ./resources/js/user.js ***!
-  \******************************/
+/***/ "./resources/js/logActivity.js":
+/*!*************************************!*\
+  !*** ./resources/js/logActivity.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
   //get base URL *********************
-  var url = $('#url').val();
+  var url = $("#url").val();
   $.ajaxSetup({
     headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
     }
   });
-  $('#tbUser').DataTable({
-    drawCallback: function drawCallback(settings) {
-      $('.delete').click(function () {
-        var id = $(this).attr('id');
-        Swal.fire({
-          title: 'Yakin data dihapus ?',
-          text: "Setelah dihapus tidak bisa kembali !",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya, hapus!',
-          cancelButtonText: 'Batal'
-        }).then(function (result) {
-          if (result.value) {
-            $.ajax({
-              url: url + '/' + id,
-              method: "DELETE",
-              data: {
-                value: id
-              },
-              success: function success(result) {
-                setTimeout(function () {
-                  $('#tbUser').DataTable().ajax.reload();
-                  Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
-                }, 200);
-              },
-              error: function error(request, status, _error) {
-                // alert(request.responseText);
-                Swal.fire('Warning!', 'Data gagal dihapus.', 'error');
-              }
-            });
-          }
+  $('.tanggal').daterangepicker({
+    "singleDatePicker": true,
+    "showDropdowns": true,
+    "autoApply": true,
+    "locale": {
+      "format": "YYYY-MM-DD"
+    }
+  });
+  load_data();
+
+  function load_data() {
+    var from_date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var to_date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+    $("#tblogActivity").DataTable({
+      drawCallback: function drawCallback(settings) {
+        $(".delete").click(function () {
+          var id = $(this).attr("id");
+          Swal.fire({
+            title: "Yakin data dihapus ?",
+            text: "Setelah dihapus tidak bisa kembali !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal"
+          }).then(function (result) {
+            if (result.value) {
+              $.ajax({
+                url: url + "/" + id,
+                method: "DELETE",
+                data: {
+                  value: id
+                },
+                success: function success(result) {
+                  setTimeout(function () {
+                    $("#tblogActivity").DataTable().ajax.reload();
+                    Swal.fire("Terhapus!", "Data telah dihapus.", "success");
+                  }, 200);
+                },
+                error: function error(request, status, _error) {
+                  // alert(request.responseText);
+                  Swal.fire("Warning!", "Data gagal dihapus.", "error");
+                }
+              });
+            }
+          });
         });
-      });
-    },
-    processing: true,
-    serverSide: true,
-    ajax: url,
-    columns: [{
-      data: 'name',
-      name: 'name'
-    }, {
-      data: 'email',
-      name: 'email'
-    }, {
-      data: 'keterangan',
-      name: 'keterangan'
-    }, {
-      data: 'role',
-      name: 'role',
-      orderable: false,
-      searchable: false
-    }, {
-      data: 'action',
-      name: 'action',
-      orderable: false,
-      searchable: false
-    }]
+      },
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: url,
+        data: {
+          from_date: from_date,
+          to_date: to_date
+        }
+      },
+      columns: [{
+        data: "updated_at",
+        name: "updated_at"
+      }, {
+        data: "subject",
+        name: "subject"
+      }, {
+        data: "ip",
+        name: "ip"
+      }, {
+        data: "user.email",
+        name: "user.email"
+      }, {
+        data: "action",
+        name: "action",
+        orderable: false,
+        searchable: false
+      }]
+    });
+  }
+
+  $("#filter").click(function () {
+    var from_date = $("#from_date").val();
+    var to_date = $("#to_date").val();
+
+    if (from_date != "" && to_date != "") {
+      $("#tblogActivity").DataTable().destroy();
+      load_data(from_date, to_date);
+    } else {
+      alert("Both Date is required");
+    }
+  });
+  $("#refresh").click(function () {
+    $("#from_date").val("");
+    $("#to_date").val("");
+    $("#tblogActivity").DataTable().destroy();
+    load_data();
   });
 });
 
 /***/ }),
 
-/***/ 1:
-/*!************************************!*\
-  !*** multi ./resources/js/user.js ***!
-  \************************************/
+/***/ 2:
+/*!*******************************************!*\
+  !*** multi ./resources/js/logActivity.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\laragon\www\mypos\resources\js\user.js */"./resources/js/user.js");
+module.exports = __webpack_require__(/*! D:\laragon\www\mypos\resources\js\logActivity.js */"./resources/js/logActivity.js");
 
 
 /***/ })

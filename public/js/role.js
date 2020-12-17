@@ -166,7 +166,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\laragon\www\permission\resources\js\role.js */"./resources/js/role.js");
+module.exports = __webpack_require__(/*! D:\laragon\www\mypos\resources\js\role.js */"./resources/js/role.js");
 
 
 /***/ })
