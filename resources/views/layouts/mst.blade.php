@@ -48,7 +48,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link" data-toggle="dropdown">
-                        <img src="{{ asset('avatar/avatar5.png') }}" class="user-image img-circle elevation-2" alt="User Image">
+                        <img src="{{ Auth::user()->kelamin == "P" ? asset('avatar/avatar5.png'):asset('avatar/avatar2.png') }}"
+                            class="user-image img-circle elevation-2" alt="User Image">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <span class="dropdown-item">

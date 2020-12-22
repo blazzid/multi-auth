@@ -61,11 +61,15 @@ class UserController extends Controller
         if (is_null($request->status)) {
             $request['status'] = "0";
         }
-        
+        if (is_null($request->kelamin)) {
+            $request['kelamin'] = "W";
+        }
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'status' => $request['status'],
+            'kelamin' => $request['kelamin'],
             'password' => Hash::make($request['new_password']),
         ]);
 
@@ -95,11 +99,15 @@ class UserController extends Controller
         if (is_null($request->status)) {
             $request['status'] = "0";
         }
+        if (is_null($request->kelamin)) {
+            $request['kelamin'] = "W";
+        }
 
         $user->update([
             'name' => $request['name'],
             'email' => $request['email'],
             'status' => $request['status'],
+            'kelamin' => $request['kelamin'],
         ]);
         $roles = $request->input('role') ? $request->input('role') : [];
         $user->syncRoles($roles);

@@ -18,7 +18,7 @@
 @section('content-body')
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Ubah Data</h4>
+        <h4 class="card-title"><i class="fas fa-edit"></i> Ubah Data</h4>
         <div class="card-tools">
             <a href="{{ route('role.index') }}" class="btn btn-tool"><i class="fas fa-times"></i></a>
         </div>

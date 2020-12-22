@@ -17,7 +17,7 @@
 @section('content-body')
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Ubah Sandi</h4>
+        <h4 class="card-title"><i class="fas fa-lock"></i> Ubah Sandi</h4>
         <div class="card-tools">
             <a href="/home" class="btn btn-tool"><i class="fas fa-times"></i></a>
         </div>

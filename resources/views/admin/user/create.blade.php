@@ -18,7 +18,7 @@
 @section('content-body')
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Tambah Data</h4>
+        <h4 class="card-title"><i class="fas fa-edit"></i> Tambah Data</h4>
         <div class="card-tools">
             <a href="{{ route('user.index') }}" class="btn btn-tool"><i class="fas fa-times"></i></a>
         </div>
@@ -61,12 +61,22 @@
                         <input type="password" class="form-control" name="new_confirm_password">
                         @include('layouts.error', ['name' => 'new_confirm_password'])
                     </div>
-                    <label>Status</label> <br>
-                    <input type="checkbox" id="status" name="status"
-                    value="{{ old('status') }}"
-                    {{ old('status') == "1" ? "checked":"" }}
-                    data-off-color="danger"
-                    data-on-color="success"> 
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="">Status</label> <br>
+                            <input type="checkbox" id="status" name="status"
+                            value="{{ old('status') }}"
+                            {{ old('status') == "1" ? "checked":"" }}
+                            data-off-color="danger" data-on-color="success">
+                        </div>
+                        <div class="col-sm">
+                            <label for="">Kelamin</label> <br>
+                            <input type="checkbox" id="kelamin" name="kelamin"
+                            value="{{ old('kelamin') }}"
+                            {{ old('kelamin') == "P" ? "checked":"" }}
+                            data-off-text="Wanita" data-on-text="Pria">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,6 +111,17 @@
                 $('#status').prop('checked', true);
             } else {
                 $('#status').prop('checked');
+            }
+        });
+        $('#kelamin').bootstrapSwitch('state');
+        $('#kelamin').on('switchChange.bootstrapSwitch',function () {
+            var check = $('.bootstrap-switch-on');
+            if (check.length > 0) {
+                $('#kelamin').val("P");
+                $('#kelamin').prop('checked', true);
+            } else {
+                $('#kelamin').val("W");
+                $('#kelamin').prop('checked');
             }
         });
     })

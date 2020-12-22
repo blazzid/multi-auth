@@ -20,7 +20,7 @@
     <div class="col-sm-6 col-xs-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Ubah Data</h4>
+                <h4 class="card-title"><i class="fas fa-edit"></i> Ubah Data</h4>
                 <div class="card-tools">
                     <a href="{{ route('user.index') }}" class="btn btn-tool"><i class="fas fa-times"></i></a>
                 </div>
@@ -52,12 +52,22 @@
                         </select>
                         @include('layouts.error', ['name' => 'role'])
                     </div>
-                    <label for="">Status</label> <br>
-                    <input type="checkbox" id="status" name="status"
-                    value="{{ old('status', $user->status) }}"
-                    {{ old('status', $user->status) == "1" ? "checked":"" }}
-                    data-off-color="danger"
-                    data-on-color="success">
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="">Status</label> <br>
+                            <input type="checkbox" id="status" name="status"
+                            value="{{ old('status', $user->status) }}"
+                            {{ old('status', $user->status) == "1" ? "checked":"" }}
+                            data-off-color="danger" data-on-color="success">
+                        </div>
+                        <div class="col-sm">
+                            <label for="">Kelamin</label> <br>
+                            <input type="checkbox" id="kelamin" name="kelamin"
+                            value="{{ old('kelamin', $user->kelamin) }}"
+                            {{ old('kelamin', $user->kelamin) == "P" ? "checked":"" }}
+                            data-off-text="Wanita" data-on-text="Pria">
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success">Simpan</button>
@@ -68,7 +78,7 @@
     <div class="col-sm-6 col-xs-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Ubah Sandi</h4>
+                <h4 class="card-title"><i class="fas fa-lock"></i> Ubah Sandi</h4>
             </div>
             <form action="/admin/ubahsandi/{{ $user->id }}" method="POST">
                 @csrf
@@ -113,11 +123,21 @@
         $('#status').bootstrapSwitch('state');
         $('#status').on('switchChange.bootstrapSwitch',function () {
             var check = $('.bootstrap-switch-on');
-            if (check.length > 0) {
+            if (check.length == 0) {
                 $('#status').val("1");
                 $('#status').prop('checked', true);
             } else {
                 $('#status').prop('checked');
+            }
+        });
+        $('#kelamin').bootstrapSwitch('state');
+        $('#kelamin').on('switchChange.bootstrapSwitch',function () {
+            var check = $('.bootstrap-switch-on');
+            if (check.length == 2) {
+                $('#kelamin').val("P");
+                $('#kelamin').prop('checked', true);
+            } else {
+                $('#kelamin').prop('checked');
             }
         });
     })
