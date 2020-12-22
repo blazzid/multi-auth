@@ -21,9 +21,9 @@ class UserController extends Controller
             ->addColumn('keterangan', function ($data)
             {
                 if ($data->status) {
-                    $button = '<label class="badge badge-success">Aktif</label>';
+                    $button = '<label class="badge badge-success">ON</label>';
                 } else {
-                    $button = '<label for="" class="badge badge-danger">Suspend</label>';
+                    $button = '<label for="" class="badge badge-danger">OFF</label>';
                 }
                 return $button;
             })
@@ -53,15 +53,19 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'status'=>'required',
             'role'=>'required',
             'new_password' => 'required|string|min:8',
             'new_confirm_password' => 'same:new_password',
         ]);
 
+        if (is_null($request->status)) {
+            $request['status'] = "0";
+        }
+        
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'status' => $request['status'],
             'password' => Hash::make($request['new_password']),
         ]);
 
@@ -70,7 +74,7 @@ class UserController extends Controller
 
         \LogActivity::addToLog('Tambah user '.$request->email);
 
-        return redirect()->route('user.index')->with('success', 'Tambah da!');
+        return redirect()->route('user.index')->with('success', 'Tambah data berhasil !');
     }
 
     public function edit(user $user)
@@ -85,9 +89,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'status'=>'required',
             'role'=>'required'
         ]);
+
+        if (is_null($request->status)) {
+            $request['status'] = "0";
+        }
 
         $user->update([
             'name' => $request['name'],
@@ -99,7 +106,7 @@ class UserController extends Controller
 
         \LogActivity::addToLog('Ubah user '.$request->email);
 
-        return redirect()->route('user.index')->with('success', 'Ubah da!');
+        return redirect()->route('user.index')->with('success', 'Ubah data berhasil !');
     }
 
     public function ubahsandi(Request $request, user $user)
@@ -115,7 +122,7 @@ class UserController extends Controller
 
         \LogActivity::addToLog('Ubah sandi '.$user->email);
 
-        return redirect()->route('user.index')->with('success', 'Ubah da!');
+        return redirect()->route('user.index')->with('success', 'Ubah data berhasil !');
     }
 
     public function changepassword(Request $request)
@@ -130,7 +137,7 @@ class UserController extends Controller
    
         \LogActivity::addToLog('Ubah sandi '.Auth::user()->email);
 
-        return redirect()->route('home')->with('success', 'Ubah da!');
+        return redirect()->route('home')->with('success', 'Ubah data berhasil !');
     }
 
     public function destroy(user $user)

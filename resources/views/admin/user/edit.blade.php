@@ -32,25 +32,14 @@
                     <div class="form-group">
                         <label>Nama Operator</label>
                         <input type="text" class="form-control" name="name"
-                            value="{{ isset($user->name) ? old('name', $user->name) : old('name') }}">
+                            value="{{ old('name', $user->name) }}">
                         @include('layouts.error', ['name' => 'name'])
                     </div>
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email"
-                            value="{{ isset($user->email) ? old('email', $user->email) : old('email') }}">
+                            value="{{ old('email', $user->email) }}">
                         @include('layouts.error', ['name' => 'email'])
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="status" class="select2 @error('status') is-invalid @enderror" style="width:100%">
-                            <option disabled selected value>Pilih data ...</option>
-                            @foreach (json_decode('{"0":"Suspend","1":"Aktif"}', true) as $optionKey => $optionValue)
-                            <option value="{{ $optionKey }}"
-                                {{ old('status', (isset($user->status) && $user->status == $optionKey)) ? 'selected' : ''}}>
-                                {{ $optionValue }}</option>
-                            @endforeach
-                        </select>
                     </div>
                     <div class="form-group">
                         <label>Role</label>
@@ -63,6 +52,12 @@
                         </select>
                         @include('layouts.error', ['name' => 'role'])
                     </div>
+                    <label for="">Status</label> <br>
+                    <input type="checkbox" id="status" name="status"
+                    value="{{ old('status', $user->status) }}"
+                    {{ old('status', $user->status) == "1" ? "checked":"" }}
+                    data-off-color="danger"
+                    data-on-color="success">
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success">Simpan</button>
@@ -109,10 +104,22 @@
 @push('scripts')
 <!-- Select2 -->
 <script src="{{ asset('storage/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- Bootstrap Switch -->
+<script src="{{ asset('storage/adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 <script>
     $(function()
     {
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#status').bootstrapSwitch('state');
+        $('#status').on('switchChange.bootstrapSwitch',function () {
+            var check = $('.bootstrap-switch-on');
+            if (check.length > 0) {
+                $('#status').val("1");
+                $('#status').prop('checked', true);
+            } else {
+                $('#status').prop('checked');
+            }
+        });
     })
 </script>
 @endpush

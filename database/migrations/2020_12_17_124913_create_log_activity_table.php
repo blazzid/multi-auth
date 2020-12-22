@@ -22,6 +22,9 @@ class CreateLogActivityTable extends Migration
             $table->string('ip');
             $table->string('agent')->nullable();
             $table->string('user_id')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -32,6 +35,11 @@ class CreateLogActivityTable extends Migration
      */
     public function down()
     {
+        Schema::table('log_activity', function (Blueprint $table) {
+            $table->dropForeign('log_activity_user_id_foreign');
+            $table->dropIndex('log_activity_user_id_foreign');
+        });
+
         Schema::dropIfExists('log_activity');
     }
 }

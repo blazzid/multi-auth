@@ -16,7 +16,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         $role = Role::create(['name' => 'administrator']);
-        $permission = Permission::create(['name' => 'manajemen_user']);
+        $permission1 = Permission::create(['name' => 'manajemen_user']);
+        $permission2 = Permission::create(['name' => 'log_monitoring']);
+        $role->syncPermissions([$permission1,$permission2]);
 
         $user = User::create([
             'name' => 'administrator',
@@ -24,8 +26,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('spasitigakali'),
             'status' => true
         ]);
-
-        $role->syncPermissions($permission);
         $user->assignRole($role);
     }
 }

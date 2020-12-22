@@ -4,7 +4,7 @@
 namespace App\Helpers;
 
 use Request;
-use App\Models\LogActivityModel;
+use App\Models\LogActivity as LogActivityModel;
 
 
 class LogActivity

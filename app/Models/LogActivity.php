@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Jamesh\Uuid\HasUuid;
 
-class LogActivityModel extends Model
+class LogActivity extends Model
 {
     use HasUuid;
     

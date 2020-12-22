@@ -51,7 +51,7 @@ class LoginController extends Controller
     {
         Auth::logoutOtherDevices($request->password);
 
-        \LogActivity::addToLog('Login '.$user->email);
+        \LogActivity::addToLog('Login Aplikasi');
 
         return redirect($this->redirectPath());
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
-use App\Models\LogActivityModel;
+use App\Models\LogActivity as LogActivityModel;
 
 class LogController extends Controller
 {

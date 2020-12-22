@@ -27,33 +27,17 @@
         @csrf
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-6 col-xs-12">
+                <div class="col-sm-6 col-xs-12">       
                     <div class="form-group">
                         <label>Nama Operator</label>
-                        <input type="text" class="form-control" name="name"
-                            value="{{ old('name') }}">
+                        <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                         @include('layouts.error', ['name' => 'name'])
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email"
-                            value="{{ old('email') }}">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                         @include('layouts.error', ['name' => 'email'])
                     </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="status" class="select2 @error('status') is-invalid @enderror" style="width:100%">
-                            <option disabled selected value>Pilih data ...</option>
-                            @foreach (json_decode('{"0":"Suspend","1":"Aktif"}', true) as $optionKey => $optionValue)
-                            <option value="{{ $optionKey }}"
-                                {{ old('status', (isset($user->status) && $user->status == $optionKey)) ? 'selected' : ''}}>
-                                {{ $optionValue }}</option>
-                            @endforeach
-                        </select>
-                        @include('layouts.error', ['name' => 'status'])
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label>Role</label>
                         <select name="role[]" class="select2" multiple="multiple" style="width: 100%">
@@ -64,7 +48,9 @@
                             @endforeach
                         </select>
                         @include('layouts.error', ['name' => 'role'])
-                    </div>                    
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label>Sandi Baru</label>
                         <input type="password" class="form-control" name="new_password">
@@ -75,6 +61,12 @@
                         <input type="password" class="form-control" name="new_confirm_password">
                         @include('layouts.error', ['name' => 'new_confirm_password'])
                     </div>
+                    <label>Status</label> <br>
+                    <input type="checkbox" id="status" name="status"
+                    value="{{ old('status') }}"
+                    {{ old('status') == "1" ? "checked":"" }}
+                    data-off-color="danger"
+                    data-on-color="success"> 
                 </div>
             </div>
         </div>
@@ -95,10 +87,22 @@
 @push('scripts')
 <!-- Select2 -->
 <script src="{{ asset('storage/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- Bootstrap Switch -->
+<script src="{{ asset('storage/adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 <script>
     $(function()
     {
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#status').bootstrapSwitch('state');
+        $('#status').on('switchChange.bootstrapSwitch',function () {
+            var check = $('.bootstrap-switch-on');
+            if (check.length > 0) {
+                $('#status').val("1");
+                $('#status').prop('checked', true);
+            } else {
+                $('#status').prop('checked');
+            }
+        });
     })
 </script>
 @endpush

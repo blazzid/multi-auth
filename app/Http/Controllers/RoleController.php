@@ -50,7 +50,7 @@ class RoleController extends Controller
 
         \LogActivity::addToLog('Tambah role '.$request->name);
 
-        return redirect()->route('role.index')->with('success', 'Tambah da!');
+        return redirect()->route('role.index')->with('success', 'Tambah data berhasil !');
     }
 
     public function edit(Role $role)
@@ -73,7 +73,7 @@ class RoleController extends Controller
 
         \LogActivity::addToLog('Ubah role '.$request->name);
 
-        return redirect()->route('role.index')->with('success', 'Ubah da!');
+        return redirect()->route('role.index')->with('success', 'Ubah data berhasil !');
     }
 
     public function destroy(Role $role)
