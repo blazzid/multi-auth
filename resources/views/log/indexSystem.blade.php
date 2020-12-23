@@ -25,7 +25,7 @@
         <table class="table table-hover" id="tblogSystem" style="width: 100%">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Nama File</th>
                     <th>Ukuran</th>
                     <th>Waktu</th>

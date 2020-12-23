@@ -15,19 +15,22 @@ class LogController extends Controller
             if (!empty($request->from_date)) {
                 $model = LogActivityModel::with('user:id,email')
                 ->whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date));
-                return DataTables::of($model)->addColumn('action', function ($data) {
+                return DataTables::of($model)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
                     $button = '<a href="/log/logActivity/'.$data->id.'" class="btn bg-navy btn-flat btn-xs" title="detail"><i class="fa fa-eye"></i></a>';
                     return $button;
                 })->rawColumns(['action'])->toJson();
             } else {
                 $model = LogActivityModel::with('user:id,email');
-                return DataTables::of($model)->addColumn('action', function ($data) {
+                return DataTables::of($model)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
                     $button = '<a href="/log/logActivity/'.$data->id.'" class="btn bg-navy btn-flat btn-xs" title="detail"><i class="fa fa-eye"></i></a>';
                     return $button;
                 })->rawColumns(['action'])->toJson();
             }
-            
-        }  
+        }
 
         return view('log.indexActivity');
     }
@@ -38,7 +41,7 @@ class LogController extends Controller
 
         \LogActivity::addToLog('Detail LogActivity '.$LogActivityModel->updated_at);
 
-        return view('log.showActivity', compact('LogActivityModel','user'));
+        return view('log.showActivity', compact('LogActivityModel', 'user'));
     }
 
     public function indexSystem()

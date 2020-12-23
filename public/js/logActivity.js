@@ -115,41 +115,6 @@ $(function () {
     var from_date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
     var to_date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
     $("#tblogActivity").DataTable({
-      drawCallback: function drawCallback(settings) {
-        $(".delete").click(function () {
-          var id = $(this).attr("id");
-          Swal.fire({
-            title: "Yakin data dihapus ?",
-            text: "Setelah dihapus tidak bisa kembali !",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal"
-          }).then(function (result) {
-            if (result.value) {
-              $.ajax({
-                url: url + "/" + id,
-                method: "DELETE",
-                data: {
-                  value: id
-                },
-                success: function success(result) {
-                  setTimeout(function () {
-                    $("#tblogActivity").DataTable().ajax.reload();
-                    Swal.fire("Terhapus!", "Data telah dihapus.", "success");
-                  }, 200);
-                },
-                error: function error(request, status, _error) {
-                  // alert(request.responseText);
-                  Swal.fire("Warning!", "Data gagal dihapus.", "error");
-                }
-              });
-            }
-          });
-        });
-      },
       processing: true,
       serverSide: true,
       ajax: {
@@ -160,6 +125,11 @@ $(function () {
         }
       },
       columns: [{
+        data: 'DT_RowIndex',
+        name: 'DT_RowIndex',
+        orderable: false,
+        searchable: false
+      }, {
         data: "updated_at",
         name: "updated_at"
       }, {

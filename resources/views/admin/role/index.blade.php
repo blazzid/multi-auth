@@ -26,6 +26,7 @@
         <table class="table table-hover" id="tbRole" style="width: 100%">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Role</th>
                     <th>Permission</th>
                     <th>Aksi</th>

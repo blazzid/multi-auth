@@ -44,6 +44,7 @@
         <table class="table table-hover" id="tblogActivity" style="width: 100%">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Tanggal</th>
                     <th>Subject</th>
                     <th>IP</th>

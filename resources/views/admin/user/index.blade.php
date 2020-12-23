@@ -26,10 +26,12 @@
         <table class="table table-hover" id="tbUser" style="width: 100%">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>User</th>
                     <th>Email</th>
                     <th>Status</th>
                     <th>Role</th>
+                    <th>Online</th>
                     <th>Aksi</th>
                 </tr>
             </thead>

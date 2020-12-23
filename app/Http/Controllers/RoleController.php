@@ -15,6 +15,7 @@ class RoleController extends Controller
         if ($request->ajax()) {
             $model = Role::select('name','id');
             return DataTables::of($model)
+            ->addIndexColumn()
             ->addColumn('action', 'admin.role.button')
             ->addColumn('permission', function ($data)
             {

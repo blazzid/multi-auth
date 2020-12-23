@@ -141,6 +141,11 @@ $(function () {
     serverSide: true,
     ajax: url,
     columns: [{
+      data: 'DT_RowIndex',
+      name: 'DT_RowIndex',
+      orderable: false,
+      searchable: false
+    }, {
       data: 'name',
       name: 'name'
     }, {
@@ -152,6 +157,11 @@ $(function () {
     }, {
       data: 'role',
       name: 'role',
+      orderable: false,
+      searchable: false
+    }, {
+      data: 'last_online_at',
+      name: 'last_online_at',
       orderable: false,
       searchable: false
     }, {
